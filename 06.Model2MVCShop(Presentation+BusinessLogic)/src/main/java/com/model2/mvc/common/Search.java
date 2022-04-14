@@ -15,6 +15,7 @@ public class Search {
 	//==> 참조
 	private int endRowNum;
 	private int startRowNum;
+	private String orderCondition;
 	
 	///Constructor
 	public Search() {
@@ -49,6 +50,13 @@ public class Search {
 		this.searchKeyword = searchKeyword;
 	}
 	
+	public String getOrderCondition() {
+		return orderCondition;
+	}
+
+	public void setOrderCondition(String orderCondition) {
+		this.orderCondition = orderCondition;
+	}
 	//==> Select Query 시 ROWNUM 마지막 값 
 	public int getEndRowNum() {
 		return getCurrentPage()*getPageSize();
@@ -57,6 +65,7 @@ public class Search {
 	public int getStartRowNum() {
 		return (getCurrentPage()-1)*getPageSize()+1;
 	}
+	
 
 	@Override
 	public String toString() {
