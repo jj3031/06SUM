@@ -87,7 +87,7 @@ function history(){
 			<c:if test="${user.role=='admin' }">
 			<tr>
 				<td class="Depth03">
-					<a href="/listSale.do?menu=manage"  target="rightFrame">판매 목록조회</a>
+					<a href="/listPurchase.do"  target="rightFrame">판매 목록조회</a>
 				</td>
 			</tr>
 			</c:if>			
