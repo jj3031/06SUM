@@ -35,7 +35,7 @@ function fncUpdatePurchase() {
 
 <body>
 
-<form name="updatePurchase" method="post" action="/updatePurchase.do">
+<form name="updatePurchase" method="post" action="/purchase/updatePurchase">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>

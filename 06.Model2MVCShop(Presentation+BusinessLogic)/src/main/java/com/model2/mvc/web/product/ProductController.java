@@ -24,6 +24,7 @@ import com.model2.mvc.service.user.UserService;
 
 //==> 회원관리 Controller
 @Controller
+@RequestMapping("/product/*")
 public class ProductController {
 	
 	///Field
@@ -50,7 +51,7 @@ public class ProductController {
 	int pageSize;
 	
 	
-	@RequestMapping("/addProductView.do") //테스트완료
+	@RequestMapping("addProductView") //테스트완료
 	public String addProductView() throws Exception {
 
 		System.out.println("/addProductView.do");
@@ -58,7 +59,7 @@ public class ProductController {
 		return "redirect:/product/addProductView.jsp";
 	}
 	
-	@RequestMapping("/addProduct.do")//테스트완료
+	@RequestMapping("addProduct")//테스트완료
 	public String addProduct( @ModelAttribute("product") Product product ) throws Exception {
 		
 		System.out.println("/addProduct.do");
@@ -68,7 +69,7 @@ public class ProductController {
 		return "forward:/product/readProduct.jsp";
 	}
 	
-	@RequestMapping("/getProduct.do")//테스트완료
+	@RequestMapping("getProduct")//테스트완료
 	public String getUser( @RequestParam("prodNo") int prodNo , Model model ) throws Exception {
 		
 		System.out.println("/getProduct.do");
@@ -81,7 +82,7 @@ public class ProductController {
 		return "forward:/product/readProduct.jsp";
 	}
 	
-	@RequestMapping("/updateProductView.do")//테스트완료
+	@RequestMapping("updateProductView")//테스트완료
 	public String updateUserView( @RequestParam("prodNo") int prodNo , Model model ) throws Exception{
 
 		System.out.println("/updateProductView.do");
@@ -93,7 +94,7 @@ public class ProductController {
 		return "forward:/product/updateProductView.jsp";
 	}
 	
-	@RequestMapping("/updateProduct.do")//테스트완료
+	@RequestMapping("updateProduct")//테스트완료
 	public String updateUser( @ModelAttribute("product") Product product , Model model , HttpSession session) throws Exception{
 
 		System.out.println("/updateProduct.do");
@@ -107,7 +108,7 @@ public class ProductController {
 
 
 	
-	@RequestMapping("/listProduct.do")//테스트완료
+	@RequestMapping("listProduct")//테스트완료
 	public String listProduct( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/listProduct.do");

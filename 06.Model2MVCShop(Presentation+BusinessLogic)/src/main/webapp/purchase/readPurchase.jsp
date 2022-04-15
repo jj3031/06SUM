@@ -32,7 +32,7 @@ function fncUpdatePurchaseView() {
 
 <body>
 
-<form name="updatePurchaseView" method="post" action="/updatePurchaseView.do">
+<form name="updatePurchaseView" method="post" action="/purchase/updatePurchaseView">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>

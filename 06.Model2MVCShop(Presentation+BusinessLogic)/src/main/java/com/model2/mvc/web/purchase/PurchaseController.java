@@ -26,6 +26,7 @@ import com.model2.mvc.service.user.UserService;
 
 //==> 회원관리 Controller
 @Controller
+@RequestMapping("/purchase/*")
 public class PurchaseController {
 	
 	///Field
@@ -58,7 +59,7 @@ public class PurchaseController {
 	int pageSize;
 	
 	
-	@RequestMapping("/addPurchaseView.do")//테스트 완료
+	@RequestMapping("addPurchaseView")//테스트 완료
 	public String addPurchaseView(@RequestParam("prod_no") int prodNo, @ModelAttribute("purchase") Purchase purchase, HttpServletRequest request, HttpSession session) throws Exception {
 
 		System.out.println("/addPurchaseView.do");
@@ -71,7 +72,7 @@ public class PurchaseController {
 		return "forward:/purchase/addPurchaseView.jsp";
 	}
 	
-	@RequestMapping("/addPurchase.do")//테스트 완료
+	@RequestMapping("addPurchase")//테스트 완료
 	public String addPurchase( @RequestParam("prodNo") int prodNo, @ModelAttribute("purchase") Purchase purchase,HttpSession session ) throws Exception {
 
 		System.out.println("/addPurchase.do");
@@ -84,7 +85,7 @@ public class PurchaseController {
 		return "forward:/purchase/readPurchase.jsp";
 	}
 	
-	@RequestMapping("/getPurchase.do")//테스트완료
+	@RequestMapping("getPurchase")//테스트완료
 	public String getUser( @RequestParam("tranNo") int tranNo , Model model ) throws Exception {
 		
 		System.out.println("/getPurchase.do");
@@ -98,7 +99,7 @@ public class PurchaseController {
 		return "forward:/purchase/readPurchase.jsp";
 	}
 	
-	@RequestMapping("/updatePurchaseView.do")
+	@RequestMapping("updatePurchaseView")
 	public String updateUserView( @RequestParam("prodNo") int prodNo , Model model ) throws Exception{
 
 		System.out.println("/updateProductView.do");
@@ -110,7 +111,7 @@ public class PurchaseController {
 		return "forward:/product/updateProductView.jsp";
 	}
 	
-	@RequestMapping("/updatePurchase.do")
+	@RequestMapping("updatePurchase")
 	public String updatePurchase( @ModelAttribute("purchase") Purchase purchase , Model model , HttpSession session) throws Exception{
 
 		System.out.println("/updateProduct.do");
@@ -121,7 +122,7 @@ public class PurchaseController {
 		return "redirect:/getProduct.do?prodNo=";
 	}
 
-	@RequestMapping("/updateTranCode.do")//테스트 완료
+	@RequestMapping("updateTranCode")//테스트 완료
 	public String updateTranCode( @RequestParam("tranNo") int tranNo, @RequestParam("tranCode") String tranCode, @ModelAttribute("purchase") Purchase purchase , Model model , HttpSession session) throws Exception{
 
 		System.out.println("/updateTranCode.do");
@@ -134,7 +135,7 @@ public class PurchaseController {
 		return "redirect:/listPurchase.do";
 	}
 	
-	@RequestMapping("/listPurchase.do")//테스트 완료
+	@RequestMapping("listPurchase")//테스트 완료
 	public String listProduct( @ModelAttribute("search") Search search , Model model , HttpServletRequest request, HttpSession session) throws Exception{
 		
 		System.out.println("/listPurchase.do");
