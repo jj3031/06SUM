@@ -10,6 +10,16 @@ DROP SEQUENCE seq_transaction_tran_no;
 CREATE SEQUENCE seq_product_prod_no		 	INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_transaction_tran_no	INCREMENT BY 1 START WITH 10000;
 
+CREATE SEQUENCE seq_wishlist_wish_no	INCREMENT BY 1 START WITH 10000;
+
+CREATE TABLE wishlist(
+	wish_no				NUMBER 				NOT NULL,
+	prod_no 			number(16) 		NOT NULL REFERENCES product(prod_no),
+	quantity			number(10)		NOT NULL REFERENCES product(quantity),
+	user_id				VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
+	PRIMARY KEY(wish_no)
+);
+
 
 CREATE TABLE users ( 
 	user_id 			VARCHAR2(20)	NOT NULL,
@@ -32,7 +42,8 @@ CREATE TABLE product (
 	manufacture_day		VARCHAR2(8),
 	price 							NUMBER(10),
 	image_file 					VARCHAR2(100),
-	reg_date 					DATE,
+	reg_date 				  	DATE,
+	QUANTITY 			  	NUMBER 				NOT NULL,
 	PRIMARY KEY(prod_no)
 );
 
@@ -47,7 +58,8 @@ CREATE TABLE transaction (
 	dlvy_request 			VARCHAR2(100),
 	tran_status_code	CHAR(3),
 	order_data 			DATE,
-	dlvy_date 				DATE,
+	dlvy_date 			  	DATE,
+	purchaseqt           NUMBER NOT NULL,
 	PRIMARY KEY(tran_no)
 );
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WishlistMapper">
+ 	
+ 	
+	<resultMap id="wishlistSelectMap" type="wishlist">
+		<result property="wishNo" 				column="wish_no" 				jdbcType="NUMERIC"/>
+		<result property="prodNo"	   			column="prod_no" 				jdbcType="NUMERIC" />
+		<result property="quantity" 			column="quantity" 			jdbcType="NUMERIC" />
+		<result property="userId" 			column="user_id" 		jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addWishlist"		parameterType="wishlist" >
+		INSERT 
+	 	INTO PRODUCT(wish_no, prod_no, quantity, user_id) 
+	 	values (seq_wishlist_wish_no.nextval, #{prodNo}, #{quantity},#{userId})
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getWishlist"	parameterType="string"	resultMap="wishlistSelectMap">
+		SELECT *
+		FROM WISHLIST
+		where user_id = #{userId}
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <delete	id="deleteWishlist"	parameterType="int" >
+	   	DELETE
+	   	FROM WISHLIST
+	   	WHERE wish_no = #{wishNo}
+	 </delete>
+		 
+	 
+</mapper>
