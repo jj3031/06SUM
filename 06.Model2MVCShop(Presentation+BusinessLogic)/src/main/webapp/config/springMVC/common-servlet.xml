@@ -98,4 +98,6 @@
 		
 	</bean>
 	
+	<!-- 파일 추가하는 곳 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 </beans>
