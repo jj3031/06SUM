@@ -25,7 +25,8 @@ import com.model2.mvc.service.wishlist.WishlistService;
 
 
 //==> 회원관리 Controller
-//@Controller
+@Controller
+@RequestMapping("/wishList/*")
 public class WishListController {
 	
 	///Field
@@ -45,22 +46,24 @@ public class WishListController {
 	
 
 	
-	@RequestMapping("/addWishlist.do")//테스트완료
-	public String addWishlist( @ModelAttribute("wishlist") Wishlist wishlist) throws Exception {
+	@RequestMapping("addWishlist")//테스트완료
+	public String addWishlist( @ModelAttribute("wishlist") Wishlist wishlist,@RequestParam("prodNo") int prodNo , @RequestParam("userId") String userId) throws Exception {
 		
-		System.out.println("/addWishlist.do");
+		wishlist.setUserId(userId);
+		wishlist.setProdNo(prodNo);
+		System.out.println("/addWishlist");
 		//Business Logic
 		wishlistService.addWishlist(wishlist);
 		
-		return "redirect:/getWishlist.do";
+		return "redirect:/wishList/getWishlist";
 	}
 	
 
 	
-	@RequestMapping("/getWishlist.do")//테스트완료
+	@RequestMapping("getWishlist")//테스트완료
 	public String listProduct( @ModelAttribute("search") Search search , Model model ,HttpSession session) throws Exception{
 		
-		System.out.println("/getWishlist.do");
+		System.out.println("/getWishlist");
 		
 		
 		
@@ -70,19 +73,22 @@ public class WishListController {
 		
 		
 		// Model 과 View 연결
-		model.addAttribute("wishList", list);
+		model.addAttribute("wishlist", list);
 		
-		return "forward:/wishList/wishList.jsp";
+		return "forward:/wishlist/wishlist.jsp";
 	}
 	
 	
-	@RequestMapping("/deleteWishlist.do")//테스트완료
-	public String deleteWishlist( @RequestParam("wishNo") int wishNo) throws Exception {
+	@RequestMapping("deleteWishlist")//테스트완료
+	public String deleteWishlist( @RequestParam("wishNo") int[] wishNo) throws Exception {
 		
-		System.out.println("/addWishlist.do");
+		System.out.println("/addWishlist.do wishNo[] : "+wishNo);
 		//Business Logic
-		wishlistService.deleteWishlist(wishNo);
+		for(int i=0; i<wishNo.length;i++) {
+			wishlistService.deleteWishlist(wishNo[i]);
+		}
 		
-		return "redirect:/getWishlist.do";
+		
+		return "redirect:/wishList/getWishlist";
 	}
 }

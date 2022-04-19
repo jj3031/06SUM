@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.model2.mvc.common.Search;
-import com.model2.mvc.service.domain.User;
+
 import com.model2.mvc.service.domain.Wishlist;
-import com.model2.mvc.service.user.UserDao;
 import com.model2.mvc.service.wishlist.WishlistDao;
 
 
@@ -47,5 +45,12 @@ public class WishlistDaoImpl implements WishlistDao{
 	public int deleteWishlist(int wishNo) throws Exception {
 		sqlSession.delete("WishlistMapper.deleteWishlist",wishNo);
 		return 1;
+	}
+
+	@Override
+	public Wishlist findWishlist(int wishNo) throws Exception {
+		
+		
+		return sqlSession.selectOne("WishlistMapper.findWishlist", wishNo);
 	}
 }

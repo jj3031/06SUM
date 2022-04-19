@@ -28,7 +28,7 @@
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getProduct"	parameterType="int"	resultMap="productSelectMap">
-		SELECT PRODUCT.*  ,  (PRODUCT.QUANTITY-A.SUM) SUM
+		SELECT PRODUCT.*  ,  (PRODUCT.QUANTITY-NVL(A.SUM,0)) SUM
 		FROM PRODUCT LEFT OUTER JOIN (SELECT PROD_NO, SUM(purchaseQt) SUM FROM TRANSACTION GROUP BY prod_no) A ON PRODUCT.PROD_NO = A.PROD_NO
 		where PRODUCT.PROD_NO = #{value}
 	 </select>
@@ -50,7 +50,7 @@
 	<select  id="getProductList"  parameterType="search"	resultMap="productSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT PRODUCT.*  ,  (PRODUCT.QUANTITY-A.SUM) SUM
+	  					FROM		(	SELECT PRODUCT.*  ,  (PRODUCT.QUANTITY-NVL(A.SUM,0)) SUM
 										FROM PRODUCT LEFT OUTER JOIN (SELECT PROD_NO, SUM(purchaseQt) SUM FROM TRANSACTION GROUP BY prod_no) A ON PRODUCT.PROD_NO = A.PROD_NO
 											<if test="searchCondition != null">
 												<where>
@@ -94,7 +94,7 @@
 	<!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT PRODUCT.*  ,  (PRODUCT.QUANTITY-A.SUM) SUM
+	  	FROM(	SELECT PRODUCT.*  ,  (PRODUCT.QUANTITY-NVL(A.SUM,0)) SUM
 				FROM PRODUCT LEFT OUTER JOIN (SELECT PROD_NO, SUM(purchaseQt) SUM FROM TRANSACTION GROUP BY prod_no) A ON PRODUCT.PROD_NO = A.PROD_NO
 											<if test="searchCondition != null">
 												<where>

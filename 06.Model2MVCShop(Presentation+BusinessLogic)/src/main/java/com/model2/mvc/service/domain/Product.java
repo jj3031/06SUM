@@ -1,5 +1,6 @@
 package com.model2.mvc.service.domain;
 
+import java.io.File;
 import java.sql.Date;
 
 
@@ -15,6 +16,7 @@ public class Product {
 	private String proTranCode;
 	private int quantity;
 	private int remain;
+	private File imgFile;
 	
 	public Product(){
 	}
@@ -78,6 +80,14 @@ public class Product {
 
 
 
+	public File getImgFile() {
+		return imgFile;
+	}
+
+	public void setImgFile(File imgFile) {
+		this.imgFile = imgFile;
+	}
+
 	public int getRemain() {
 		return remain;
 	}
@@ -90,6 +100,6 @@ public class Product {
 	public String toString() {
 		return "ProductVO : [fileName]" + fileName
 				+ "[manuDate]" + manuDate+ "[price]" + price + "[prodDetail]" + prodDetail
-				+ "[prodName]" + prodName + "[prodNo]" + prodNo+"[remain]" + remain;
+				+ "[prodName]" + prodName + "[prodNo]" + prodNo+"[remain]" + remain+"[fileName]"+fileName;
 	}	
 }

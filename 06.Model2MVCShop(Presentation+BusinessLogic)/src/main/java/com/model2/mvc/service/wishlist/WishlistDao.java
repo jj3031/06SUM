@@ -10,12 +10,15 @@ public interface WishlistDao {
 	
 	// INSERT
 	public void addWishlist(Wishlist wishlist) throws Exception ;
+	
+	//Find
+	public Wishlist findWishlist(int wishNo) throws Exception;
 
 	// SELECT LIST
 	public List<Wishlist> getWishlist(String userId) throws Exception ;
 
 	
-	// 게시판 Page 처리를 위한 전체Row(totalCount)  return
+	//delete
 	public int deleteWishlist(int wishNo) throws Exception ;
 	
 }

@@ -92,7 +92,7 @@ function fncGetUserList(currentPage) {
 		<td align="center">${status.count}</td>
 		<td></td>
 	
-		<td align="left"><a href="/getPurchase.do?tranNo=${list.tranNo}">${list.buyer.userId}</a></td>
+		<td align="left"><a href="/purchase/getPurchase?tranNo=${list.tranNo}">${list.buyer.userId}</a></td>
 						
 		<td></td>
 		<td align="left">${list.buyer.userName}</td>
@@ -117,12 +117,12 @@ function fncGetUserList(currentPage) {
 		
 				<c:if test="${list.tranCode=='1' }">
 					<c:if test="${user.role=='admin'}">
-						구매완료 <a href="/updateTranCode.do?tranNo=${list.tranNo}&tranCode=2">배송하기</a>	
+						구매완료 <a href="/purchase/updateTranCode?tranNo=${list.tranNo}&tranCode=2">배송하기</a>	
 					</c:if>
 				</c:if>	
 				<c:if test="${list.tranCode=='2' }">
 					<c:if test="${user.userId == list.buyer.userId }">
-					<a href="/updateTranCode.do?tranNo=${list.tranNo}&tranCode=3">물건도착</a>
+					<a href="/purchase/updateTranCode?tranNo=${list.tranNo}&tranCode=3">물건도착</a>
 					</c:if>	
 				</c:if>				
 				<c:if test="${list.tranCode=='3' }">

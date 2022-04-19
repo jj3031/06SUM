@@ -8,7 +8,9 @@ public class Wishlist {
 	private int prodNo;
 	private String userId;
 	private int quantity;
-	
+	private int remain;
+	private int price;
+	private String prodName;
 
 
 	public int getWishNo() {
@@ -59,8 +61,44 @@ public class Wishlist {
 
 
 
+	public int getRemain() {
+		return remain;
+	}
+
+
+
+	public void setRemain(int remain) {
+		this.remain = remain;
+	}
+
+
+
+	public int getPrice() {
+		return price;
+	}
+
+
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+
+
+	public String getProdName() {
+		return prodName;
+	}
+
+
+
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
+	}
+
+
+
 	// Override
 	public String toString() {
-		return "ProductVO : [fileName]";
+		return "WishlisVO :"+wishNo+prodNo+userId;
 	}	
 }

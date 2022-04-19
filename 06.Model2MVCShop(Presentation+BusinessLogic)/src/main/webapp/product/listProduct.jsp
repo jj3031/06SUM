@@ -181,7 +181,7 @@ function fncGetProductOrderList(orderCondition) {
 	<tr class="ct_list_pop">
 		<td align="center">${ i }</td>
 		<td></td>
-		<td align="left"><a href="/getProduct.do?prodNo=${prod.prodNo}"> ${prod.prodName}</a></td>
+		<td align="left"><a href="/product/getProduct?prodNo=${prod.prodNo}"> ${prod.prodName}</a></td>
 		<td></td>
 		<td align="left">${prod.price}</td>
 		<td></td>

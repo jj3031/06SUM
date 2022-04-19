@@ -48,6 +48,12 @@ public class WishlistServiceImpl implements WishlistService{
 		return 1;
 	}
 
+	@Override
+	public Wishlist findWishlist(int wishNo) throws Exception {
+		
+		return wishlistDao.findWishlist(wishNo);
+	}
+
 	
 
 }
