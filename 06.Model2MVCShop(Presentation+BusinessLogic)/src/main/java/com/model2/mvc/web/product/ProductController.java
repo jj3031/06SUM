@@ -2,6 +2,7 @@ package com.model2.mvc.web.product;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -71,9 +72,9 @@ public class ProductController {
 	}
 	
 	@RequestMapping("addProduct")//테스트완료
-	public String addProduct(@ModelAttribute("product") Product product, @RequestParam("file") MultipartFile file, HttpServletRequest request ) throws Exception {
+	public String addProduct(@ModelAttribute("product") Product product, @RequestParam("file") List<MultipartFile> files, HttpServletRequest request ) throws Exception {
 		//@ModelAttribute("product") Product product, 
-		System.out.println("/addProduct.do");
+		System.out.println("/addProduct");
 		
 //		if(FileUpload.isMultipartContent(request)) {
 //		
@@ -141,14 +142,20 @@ public class ProductController {
 //			}
 //			System.out.println(file.getOriginalFilename());
 //			System.out.println(file.getName());
-		
-			String fileName = file.getOriginalFilename();
+			List<String> imgFileName = new ArrayList<String>();
+			
+			for(int i=0; i<files.size();i++) {
+			String fileName = files.get(i).getOriginalFilename();
 			File saveFile = new File(temDir, fileName);
-			file.transferTo(saveFile);
-			product.setFileName(file.getOriginalFilename());
+			files.get(i).transferTo(saveFile);
+			imgFileName.add(fileName);
+			}
+			
+			
+			product.setFileName(imgFileName.toString());
 			productService.addProduct(product);
 			request.setAttribute("product", product);
-		
+			
 			return "forward:/product/readProduct.jsp";
 			
 		}
@@ -160,8 +167,31 @@ public class ProductController {
 		//Business Logic
 		Product product = productService.getProduct(prodNo);
 		
+		
+		model.addAttribute("fileName",product.getFileName());
+		List<String> imgFile = new ArrayList<String>();
+		if(product.getFileName().charAt(0)=='[') {
+			String list = product.getFileName().substring(1);
+			list = list.substring(0,list.length()-1);
+			list = list.trim();
+			System.out.println(list);
+			String[] splitList = list.split(",");
+			for(int i=0; i<splitList.length;i++) {
+				splitList[i]=splitList[i].trim();
+				imgFile.add(splitList[i]);
+			}
+			model.addAttribute("fileName",imgFile);
+		}
+		
+		
 		// Model 과 View 연결
 		model.addAttribute("product", product);
+		
+		
+		
+		
+		
+		
 		
 		return "forward:/product/readProduct.jsp";
 	}
@@ -174,12 +204,12 @@ public class ProductController {
 		Product product = productService.getProduct(prodNo);
 		// Model 과 View 연결
 		model.addAttribute("product", product);
-		
+
 		return "forward:/product/updateProductView.jsp";
 	}
 	
 	@RequestMapping("updateProduct")//테스트완료
-	public String updateUser(@ModelAttribute("product") Product product, @RequestParam MultipartFile file, HttpServletRequest request ) throws Exception{
+	public String updateUser(@ModelAttribute("product") Product product, @RequestParam("file") List<MultipartFile> files, HttpServletRequest request ) throws Exception{
 
 //		System.out.println("/updateProduct.do"); @ModelAttribute("product") Product product , 
 //		//Business Logic
@@ -242,12 +272,17 @@ public class ProductController {
 //					}
 //				}//else
 //			}//for
-		String fileName = file.getOriginalFilename();
-		String temDir="C:\\Users\\bitcamp\\git\\repository\\06.Model2MVCShop(Presentation+BusinessLogic)\\src\\main\\webapp\\images\\uploadFiles\\";
+		List<String> imgFileName = new ArrayList<String>();
 		
+		for(int i=0; i<files.size();i++) {
+		String fileName = files.get(i).getOriginalFilename();
 		File saveFile = new File(temDir, fileName);
-		file.transferTo(saveFile);
-		product.setFileName(file.getOriginalFilename());		
+		files.get(i).transferTo(saveFile);
+		imgFileName.add(fileName);
+		}
+		
+		
+		product.setFileName(imgFileName.toString());	
 		productService.updateProduct(product);
 		
 		request.setAttribute("product", product);

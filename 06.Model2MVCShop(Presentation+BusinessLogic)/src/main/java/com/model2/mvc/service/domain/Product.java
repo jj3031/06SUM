@@ -2,13 +2,14 @@ package com.model2.mvc.service.domain;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.List;
 
 
 public class Product {
 	
-	private String fileName;
 	private String manuDate;
 	private int price;
+	private String fileName;
 	private String prodDetail;
 	private String prodName;
 	private int prodNo;
@@ -30,8 +31,8 @@ public class Product {
 	public String getFileName() {
 		return fileName;
 	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setFileName(String imgFileName) {
+		this.fileName = imgFileName;
 	}
 	public String getManuDate() {
 		return manuDate;

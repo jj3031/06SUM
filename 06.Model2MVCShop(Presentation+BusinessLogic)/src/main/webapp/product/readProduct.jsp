@@ -107,9 +107,12 @@
 			<!-- 테이블 시작 -->
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
+					<c:set var="i" value="0"/>
+					<c:forEach var="file" items="${fileName}">
 					<td height="26">
-						<img src="/images/uploadFiles/${product.fileName}"/>
+						<img src="/images/uploadFiles/${file}"/>
 					</td>
+					</c:forEach>
 				</tr>
 			</table>
 		</td>
