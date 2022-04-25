@@ -26,6 +26,15 @@
 	 	values (seq_product_prod_no.nextval, #{prodName},TO_DATE( #{manuDate},'YYYY-MM-DD'), #{prodDetail},#{price},#{fileName}, SYSDATE , #{quantity})
 	 </insert>
 	 
+	 
+	 <!-- SQL : DELETE -->
+	 <delete	id="deleteProduct"	parameterType="int" >
+	   	DELETE
+	   	FROM PRODUCT
+	   	WHERE PROD_NO = #{prodNo}
+	 </delete>
+	 
+	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getProduct"	parameterType="int"	resultMap="productSelectMap">
 		SELECT PRODUCT.*  ,  (PRODUCT.QUANTITY-NVL(A.SUM,0)) SUM

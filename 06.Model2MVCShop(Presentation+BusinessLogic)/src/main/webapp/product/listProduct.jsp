@@ -24,19 +24,23 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-<!--
-// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
-function fncGetUserList(currentPage) {
-	document.getElementById("currentPage").value = currentPage;
-   	document.detailForm.submit();		
-}
 
-function fncGetProductOrderList(orderCondition) {
-	document.getElementById("orderCondition").value = orderCondition;
-   	document.detailForm.submit();		
-}
--->
+		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
+		function fncGetUserList(currentPage) {
+			//document.getElementById("currentPage").value = currentPage;
+			$("#currentPage").val(currentPage)
+		   	//document.detailForm.submit();
+			$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
+		}
+
+		function fncGetProductOrderList(orderCondition) {
+			document.getElementById("orderCondition").value = orderCondition;
+   			//document.detailForm.submit();
+			$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
+		}
+
 </script>
 </head>
 
@@ -44,7 +48,7 @@ function fncGetProductOrderList(orderCondition) {
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/product/listProduct?menu=manage" method="post">
+<form name="detailForm">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
