@@ -17,7 +17,7 @@
 
 
 
-
+<!DOCTYPE html>
 <html>
 <head>
 <title>상품 목록조회</title>
@@ -27,6 +27,31 @@
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
+		$(function() {
+			 
+			
+			 $( "td.ct_btn01:contains('가격 높은 순')" ).on("click" , function() {
+				
+				 fncGetProductOrderList("priceDesc");
+			});
+			 
+			 $( "td.ct_btn01:contains('가격 낮은 순')" ).on("click" , function() {
+					
+				 fncGetProductOrderList("priceAsc");
+			});
+			 
+			 $( "td.ct_btn01:contains('등록 순')" ).on("click" , function() {
+					
+				 fncGetProductOrderList("prodNoAsc");
+			});
+			 
+			$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
+					//Debug..
+					alert( $(this).parent().find("#prodNo").val() );
+					self.location ="/product/getProduct?prodNo="+$(this).parent().find("#prodNo").val();
+			});
+		});
+		
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
 		function fncGetUserList(currentPage) {
 			//document.getElementById("currentPage").value = currentPage;
@@ -36,10 +61,13 @@
 		}
 
 		function fncGetProductOrderList(orderCondition) {
-			document.getElementById("orderCondition").value = orderCondition;
+			//document.getElementById("orderCondition").value = orderCondition;
+			$("#orderCondition").val(orderCondition)
    			//document.detailForm.submit();
-			$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
+			fncGetUserList(1);
 		}
+		
+
 
 </script>
 </head>
@@ -114,6 +142,7 @@
 		<td colspan="11" >전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지</td>
 	</tr>
 	<tr>
+		<input type="hidden" id="menu" name="menu" value="${param.menu}"/>
 	 <input type="hidden" id="orderCondition" name="orderCondition" value="${search.orderCondition}"/>
 		<td align="right" width="70">
 			<table border="0" cellspacing="0" cellpadding="0">
@@ -185,7 +214,8 @@
 	<tr class="ct_list_pop">
 		<td align="center">${ i }</td>
 		<td></td>
-		<td align="left"><a href="/product/getProduct?prodNo=${prod.prodNo}"> ${prod.prodName}</a></td>
+		<td align="left"><a>${prod.prodName}</a><input type="hidden"  id="prodNo" value="${prod.prodNo}"/></td>
+		
 		<td></td>
 		<td align="left">${prod.price}</td>
 		<td></td>

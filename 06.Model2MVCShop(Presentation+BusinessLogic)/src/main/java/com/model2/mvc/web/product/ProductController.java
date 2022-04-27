@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -161,11 +163,59 @@ public class ProductController {
 		}
 	
 	@RequestMapping("getProduct")//테스트완료
-	public String getUser( @RequestParam("prodNo") int prodNo , Model model ) throws Exception {
+	public String getUser( @RequestParam("prodNo") int prodNo , Model model,HttpServletRequest request,HttpServletResponse response,@CookieValue(value="history" ,required=false) Cookie cookie ) throws Exception {
+		
 		
 		System.out.println("/getProduct.do");
 		//Business Logic
 		Product product = productService.getProduct(prodNo);
+		
+		String prodName = product.getProdName();
+		String fileName = product.getFileName();
+		String cookieString =prodName+"&"+fileName+"&"+prodNo;
+		
+		
+		
+		if(cookie==null) {
+			cookie = new Cookie("history", cookieString );
+			cookie.setPath("/");
+			response.addCookie(cookie);
+		}else {
+			String value = cookie.getValue();
+			value += ("/"+cookieString);
+			cookie.setValue(value);
+			cookie.setPath("/");
+			response.addCookie(cookie);
+		}
+//			String history=null;
+//			Cookie[] cookies = request.getCookies();
+//			if (cookies!=null && cookies.length > 0) {
+//				for (int i = 0; i < cookies.length; i++) {
+//					Cookie cookie = cookies[i];
+//					if (cookie.getName().equals("history")) {
+//						history = cookie.getValue();
+//						if (history != null) {
+//							history +=("/"+prodNo);
+//							cookie.setValue(history);
+//							response.addCookie(cookie);
+//						}else {
+//							cookie = new Cookie("history", Integer.toString(prodNo));
+//							response.addCookie(cookie);
+//						}
+//						System.out.println("쿠키는"+cookie.getValue());
+//						System.out.println("쿠키는이름은"+cookie.getName());
+//					}
+//				}
+//				
+//			}else {
+//				Cookie cookie = new Cookie("history", Integer.toString(prodNo));
+//				response.addCookie(cookie);
+//			}
+				
+			
+			
+
+			
 		
 		
 		model.addAttribute("fileName",product.getFileName());
