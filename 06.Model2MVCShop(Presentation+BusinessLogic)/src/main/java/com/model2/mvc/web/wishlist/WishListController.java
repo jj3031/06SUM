@@ -47,15 +47,15 @@ public class WishListController {
 
 	
 	@RequestMapping("addWishlist")//테스트완료
-	public String addWishlist( @ModelAttribute("wishlist") Wishlist wishlist,@RequestParam("prodNo") int prodNo , @RequestParam("userId") String userId) throws Exception {
-		
-		wishlist.setUserId(userId);
+	public String addWishlist( @ModelAttribute("wishlist") Wishlist wishlist,@RequestParam("prodNo") int prodNo , HttpSession session) throws Exception {
+		User user = (User)session.getAttribute("user");
+		wishlist.setUserId(user.getUserId());
 		wishlist.setProdNo(prodNo);
 		System.out.println("/addWishlist");
 		//Business Logic
 		wishlistService.addWishlist(wishlist);
 		
-		return "redirect:/wishList/getWishlist";
+		return "redirect:/product/listProduct";
 	}
 	
 
