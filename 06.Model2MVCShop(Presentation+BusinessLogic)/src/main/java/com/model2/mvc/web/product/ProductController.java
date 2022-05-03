@@ -87,8 +87,21 @@ public class ProductController {
 			imgFileName.add(fileName);
 			}
 			
+			String fileName="";
+			for(int i=0; i<files.size();i++) {
+				String file = files.get(i).getOriginalFilename();
+				if(i==0) {
+					fileName += file;
+				}else {
+					fileName += "&"+file;
+				}
+				
+			}
 			
-			product.setFileName(imgFileName.toString());
+			
+			
+			
+			product.setFileName(fileName);
 			productService.addProduct(product);
 			request.setAttribute("product", product);
 			
@@ -118,6 +131,15 @@ public class ProductController {
 			list = list.trim();
 			System.out.println(list);
 			String[] splitList = list.split(",");
+			for(int i=0; i<splitList.length;i++) {
+				splitList[i]=splitList[i].trim();
+				imgFile.add(splitList[i]);
+			}
+			model.addAttribute("fileName",imgFile);
+		}
+		
+		if(product.getFileName().contains("&")) {
+			String[] splitList = product.getFileName().split("&");
 			for(int i=0; i<splitList.length;i++) {
 				splitList[i]=splitList[i].trim();
 				imgFile.add(splitList[i]);
@@ -163,8 +185,19 @@ public class ProductController {
 		imgFileName.add(fileName);
 		}
 		
+		String fileName="";
+		for(int i=0; i<files.size();i++) {
+			String file = files.get(i).getOriginalFilename();
+			if(i==0) {
+				fileName += file;
+			}else {
+				fileName += "&"+file;
+			}
+			
+		}
 		
-		product.setFileName(imgFileName.toString());	
+		
+		product.setFileName(fileName);	
 		productService.updateProduct(product);
 		
 		request.setAttribute("product", product);

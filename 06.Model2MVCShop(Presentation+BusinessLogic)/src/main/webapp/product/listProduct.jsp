@@ -3,7 +3,7 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 
@@ -170,9 +170,33 @@
 			<c:forEach var="prod" items="${prodList}">
 		  <div class="col-sm-6 col-md-4">
 		    <div class="thumbnail">
-				<c:forEach var="file" items="${fileName}">
-		      <img src="/images/uploadFiles/${file}" alt="image 없음">
-		      	</c:forEach>
+
+		      <c:if test="${fn:contains(prod.fileName, '&')}">
+				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">			 
+						<div class="carousel-inner" role="listbox">		  
+							<c:set var="product" value="${fn:split(prod.fileName,'&')}" />
+								<c:forEach var="telNum" items="${product}" varStatus="g">
+									<!-- Wrapper for slides -->								 
+								 <c:if test="${g.count==1}">
+								    <div class="item active">
+								      <img src="/images/uploadFiles/${telNum}" >
+								    </div>
+								 </c:if>
+								 
+								 <c:if test="${g.count!=1}">   
+								    <div class="item">
+								      <img src="/images/uploadFiles/${telNum}" >
+								    </div>
+								 </c:if>		    
+								</c:forEach>
+						</div>
+				</div>
+								
+				</c:if>				
+								<!-- <img src="/images/uploadFiles/${telNum}" alt="image 없음"  height="200" width="242"> -->
+		      <c:if test="${!fn:contains(prod.fileName, '&')}">
+		      <img src="/images/uploadFiles/${prod.fileName}" alt="image 없음"  height="200" width="242">
+		      </c:if>
 		      <div class="caption">
 		        <h3>${prod.prodName}</h3>
 		        <p>${prod.prodDetail}</p>

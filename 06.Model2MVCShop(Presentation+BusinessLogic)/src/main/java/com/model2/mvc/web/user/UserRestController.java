@@ -78,4 +78,19 @@ public class UserRestController {
 		
 		return dbUser;
 	}
+	
+//	@RequestMapping( value="json/login", method=RequestMethod.POST )
+//	public User kakaoLogin(	@RequestParam("code") String code, HttpSession session ) throws Exception{
+//	
+//		System.out.println("/user/json/login : POST");
+//		//Business Logic
+//		System.out.println("::"+user);
+//		User dbUser=userService.getUser(user.getUserId());
+//		
+//		if( user.getPassword().equals(dbUser.getPassword())){
+//			session.setAttribute("user", dbUser);
+//		}
+//		
+//		return dbUser;
+//	}
 }
