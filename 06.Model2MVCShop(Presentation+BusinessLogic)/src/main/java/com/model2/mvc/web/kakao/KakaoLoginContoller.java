@@ -25,6 +25,10 @@ public class KakaoLoginContoller {
 	@Qualifier("kakaoImpl")
     private KakaoImpl kakao;
 	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
 	public KakaoLoginContoller() {
 		// TODO Auto-generated constructor stub
 	}
@@ -49,7 +53,17 @@ public class KakaoLoginContoller {
 	        session.setAttribute("userId", userInfo.get("email"));
 	        session.setAttribute("access_Token", access_Token);
 	    }
-		return "forward:/user/kakaoLogin.jsp";
+	    String userId= (String) userInfo.get("email");
+		System.out.println("/user/login : POST");
+		//Business Logic
+		if(userService.checkDuplication(userId)){
+			
+			return "redirect:/user/addUserViewByKakao.jsp";
+		}else {
+
+		
+		return "redirect:/index.jsp";
+		}
 	}
 	
 	@RequestMapping( value="logout")

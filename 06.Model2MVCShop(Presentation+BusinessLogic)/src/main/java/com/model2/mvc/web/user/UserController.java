@@ -124,13 +124,20 @@ public class UserController {
 		
 		System.out.println("/user/login : POST");
 		//Business Logic
+		if(userService.checkDuplication(user.getUserId())) {
+			return "redirect:/user/addUserView.jsp";
+		}else {
+		
 		User dbUser=userService.getUser(user.getUserId());
 		
 		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
 		}
 		
+
+		
 		return "redirect:/index.jsp";
+		}
 	}
 	
 	//@RequestMapping("/logout.do")
@@ -158,6 +165,9 @@ public class UserController {
 
 		return "forward:/user/checkDuplication.jsp";
 	}
+	
+
+	
 	
 	//@RequestMapping("/listUser.do")
 	@RequestMapping( value="listUser" )

@@ -20,6 +20,7 @@ public class User {
 	private String phone1;
 	private String phone2;
 	private String phone3;
+	private String addPath;
 
 	
 	
@@ -97,6 +98,15 @@ public class User {
 	}
 	public String getPhone3() {
 		return phone3;
+	}
+
+	
+	public String getAddPath() {
+		return addPath;
+	}
+
+	public void setAddPath(String addPath) {
+		this.addPath = addPath;
 	}
 
 	@Override
