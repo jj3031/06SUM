@@ -64,6 +64,32 @@
 			});
 		});
 		
+		
+		//=============아이디 존재 여부 체크 실시간==========
+		function checkId(){
+            var id = $('#userId').val();
+		        $.ajax({
+		            url:'/user/json/idCheck',
+		            type:'post',
+		            data:id,
+		            dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+		            success:function(JSONData , status){ //컨트롤러에서 넘어온 cnt값을 받는다 
+		                if(!JSONData){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
+		                    $('.id_none').css("display", "none");
+		                } else { 
+		                    $('.id_none').css("display","inline-block");
+		                }
+		            },
+		            error:function(){
+		                alert("아이디를 적어주세요");
+		            }
+		        });
+        	};
+        
 	</script>		
 	
 </head>
@@ -97,9 +123,10 @@
 			        <form class="form-horizontal">
 		  
 					  <div class="form-group">
-					    <label for="userId" class="col-sm-4 control-label">아 이 디</label>
+					    <label for="userId" class="col-sm-4 control-label id">아 이 디</label>
 					    <div class="col-sm-6">
-					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" >
+					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" required oninput = "checkId()" >
+					     		  <span class="id_none" style="display:none">가입된 아이디가 존재하지 않습니다. 회원가입을 먼저 진행해주세요.</span>
 					    </div>
 					  </div>
 					  
@@ -116,7 +143,11 @@
 					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
 					    </div>
 					  </div>
-			
+					   <div class="form-group">
+						<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=14488329bb0ccdf08f6b761a0726ab5a&redirect_uri=http://localhost:8080/kakao/login">
+            <img src="/images/kakao/kakao_login_medium_narrow.png">
+       					 </a>
+       					 </div>
 					</form>
 			   	 </div>
 			

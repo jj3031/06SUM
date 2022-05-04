@@ -17,14 +17,15 @@
 		<result property="addr" 				column="addr" 					jdbcType="VARCHAR" />
 		<result property="email" 			column="email" 				jdbcType="NUMERIC"  />
 		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+		<result property="ssn" 				column="add_path" 					jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date, add_path) 
 		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE, 'site' )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -94,5 +95,12 @@
 							</where>
 						</if> ) countTable						
 	 </select>
+	 
+	 <insert 	id="addUserByKakao"		parameterType="user" >
+	 	INSERT
+		INTO users( user_id , user_name ,  role , cell_phone, addr, email , reg_date, add_path) 
+		VALUES	 (	#{userId} , #{userName} ,  'user' ,  
+							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE, 'kakao' )
+	 </insert>
 	 
 </mapper>

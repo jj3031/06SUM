@@ -79,6 +79,18 @@ public class UserRestController {
 		return dbUser;
 	}
 	
+	@RequestMapping( value="json/idCheck", method=RequestMethod.POST )
+    public boolean idCheck(@RequestBody String id) throws Exception{
+        System.out.println("userIdCheck 진입");
+        System.out.println("전달받은 id:"+id);
+        boolean result=userService.checkDuplication(id);
+        boolean result1=userService.checkDuplication("admin");
+        System.out.println("확인 결과:"+result);
+        
+        System.out.println("확인 결과 테스트:"+result1);
+        return result;
+    }
+	
 //	@RequestMapping( value="json/login", method=RequestMethod.POST )
 //	public User kakaoLogin(	@RequestParam("code") String code, HttpSession session ) throws Exception{
 //	
