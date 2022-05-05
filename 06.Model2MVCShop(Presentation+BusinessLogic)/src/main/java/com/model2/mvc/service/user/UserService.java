@@ -12,6 +12,8 @@ public interface UserService {
 	// 회원가입
 	public void addUser(User user) throws Exception;
 	
+	public void addUserByKakao(User user) throws Exception;
+	
 	// 내정보확인 / 로그인
 	public User getUser(String userId) throws Exception;
 	

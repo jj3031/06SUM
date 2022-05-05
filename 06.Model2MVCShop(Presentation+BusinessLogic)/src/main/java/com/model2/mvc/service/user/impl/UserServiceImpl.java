@@ -63,4 +63,11 @@ public class UserServiceImpl implements UserService{
 		}
 		return result;
 	}
+
+	@Override
+	public void addUserByKakao(User user) throws Exception {
+		user.setPassword("dkftndjqtdma");
+		userDao.addUserByKakao(user);
+		
+	}
 }

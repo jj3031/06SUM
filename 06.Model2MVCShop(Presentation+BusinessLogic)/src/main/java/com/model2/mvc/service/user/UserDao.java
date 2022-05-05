@@ -11,6 +11,8 @@ public interface UserDao {
 	
 	// INSERT
 	public void addUser(User user) throws Exception ;
+	
+	public void addUserByKakao(User user) throws Exception ;
 
 	// SELECT ONE
 	public User getUser(String userId) throws Exception ;

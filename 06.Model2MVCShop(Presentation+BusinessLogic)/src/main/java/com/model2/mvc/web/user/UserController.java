@@ -64,6 +64,16 @@ public class UserController {
 		return "redirect:/user/loginView.jsp";
 	}
 	
+	@RequestMapping( value="addUserByKakao", method=RequestMethod.POST )
+	public String addUserByKakao( @ModelAttribute("user") User user ) throws Exception {
+
+		System.out.println("/user/addUser : POST");
+		//Business Logic
+		userService.addUserByKakao(user);
+		
+		return "redirect:/user/loginView.jsp";
+	}	
+	
 	//@RequestMapping("/getUser.do")
 	@RequestMapping( value="getUser", method=RequestMethod.GET )
 	public String getUser( @RequestParam("userId") String userId , Model model ) throws Exception {
@@ -134,7 +144,7 @@ public class UserController {
 			session.setAttribute("user", dbUser);
 		}
 		
-
+		
 		
 		return "redirect:/index.jsp";
 		}
@@ -146,9 +156,15 @@ public class UserController {
 		
 		System.out.println("/user/logout : POST");
 		
-		session.invalidate();
+		User dbUser=(User)session.getAttribute("user");
+		if(dbUser.getAddPath().equals("kakao")) {
+			return "redirect:/kakao/logout";
+		}else {
+			session.invalidate();
+			
+			return "redirect:/index.jsp";
+		}
 		
-		return "redirect:/index.jsp";
 	}
 	
 	
