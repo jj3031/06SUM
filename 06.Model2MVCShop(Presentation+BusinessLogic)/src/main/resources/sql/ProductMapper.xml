@@ -49,6 +49,7 @@
 	   		PROD_NAME 	= #{prodName} ,
 			PROD_DETAIL	= #{prodDetail},
 			MANUFACTURE_DAY	= #{manuDate} ,
+			QUANTITY = #{quantity} ,
 			PRICE	 	=	#{price},
 			IMAGE_FILE	=	#{fileName}
 	   	</set>
@@ -108,10 +109,10 @@
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				PROD_NO LIKE '%'||#searchKeyword#||'%' 
+										 				PROD_NO LIKE '%'||#{searchKeyword}||'%' 
 													</if>
 													<if test="searchCondition == 2 and searchKeyword !='' ">
-										 				PROD_NAME LIKE '%'||#searchKeyword#||'%' 
+										 				PROD_NAME LIKE '%'||#{searchKeyword}||'%' 
 													</if>
 													<if test="searchCondition == 3 and searchKeyword !='' ">
 										 				PRICE = #{searchKeyword} 

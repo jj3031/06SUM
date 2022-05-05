@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,72 +78,6 @@ public class ProductController {
 		//@ModelAttribute("product") Product product, 
 		System.out.println("/addProduct");
 		
-//		if(FileUpload.isMultipartContent(request)) {
-//		
-//		String temDir="C:\\Users\\bitcamp\\git\\repository\\06.Model2MVCShop(Presentation+BusinessLogic)\\src\\main\\webapp\\images\\uploadFiles\\";
-//		//Business Logic
-//		DiskFileUpload fileUpload = new DiskFileUpload();
-//		fileUpload.setRepositoryPath(temDir);
-//		fileUpload.setSizeMax(1024*1024*100);
-//		fileUpload.setSizeThreshold(1024*100);
-//		
-//		if(request.getContentLength()<fileUpload.getSizeMax()) {
-//			Product product = new Product();
-//			
-//			StringTokenizer token = null;
-//			
-//			List fileItemList = fileUpload.parseRequest(request);
-//			int Size = fileItemList.size();
-//			for(int i=0; i<Size;i++) {
-//				FileItem fileItem = (FileItem) fileItemList.get(i);
-//				if(fileItem.isFormField()) {
-//					if(fileItem.getFieldName().equals("manuDate")) {
-//						token = new StringTokenizer(fileItem.getString("euc-kr"),"-");
-//						String manuDate = token.nextToken()+token.nextToken()+token.nextToken();
-//						product.setManuDate(manuDate);
-//					}
-//					else if(fileItem.getFieldName().equals("prodName")) 
-//						product.setProdName(fileItem.getString("euc-kr"));
-//					else if(fileItem.getFieldName().equals("prodDetail")) 
-//						product.setProdDetail(fileItem.getString("euc-kr"));
-//					else if(fileItem.getFieldName().equals("price")) 
-//						product.setPrice(Integer.parseInt(fileItem.getString("euc-kr")));
-//					else if(fileItem.getFieldName().equals("quantity")) 
-//						product.setQuantity(Integer.parseInt(fileItem.getString("euc-kr")));
-//					}else {//파일형식이면
-//						if(fileItem.getSize()>0) {
-//						int idx = fileItem.getName().lastIndexOf("\\");
-//						//getName은 경로를 전부다 가져오기 때문에 마지막 \\ 뒤가 파일 이름
-//						if(idx==-1) {
-//							idx=fileItem.getName().lastIndexOf("/");
-//						}
-//						String fileName = fileItem.getName().substring(idx+1);
-//						System.out.println(fileName);
-//						product.setFileName(fileName);
-//						try {
-//							File uploadFile = new File(temDir, fileName);
-//							fileItem.write(uploadFile);
-//						}catch(IOException e){
-//							System.out.println(e);
-//						}
-//					}else {
-//						product.setFileName("../../images/empty.GIF");
-//					}
-//				}//else
-//			}//for
-//		productService.addProduct(product);
-//		
-//		request.setAttribute("product", product);
-//		}else {
-//			int overSize = (request.getContentLength()/1000000);
-//			System.out.println("<script> alert('파일의 크기는 1MB 까지 입니다. 올리신 파일 용량은"+overSize+"MB 입니다');");
-//			System.out.println("history.back();</script>");
-//			}
-//		}else {
-//			System.out.println("인코딩 타입이 multipart/form-data가 아닙니다.");
-//			}
-//			System.out.println(file.getOriginalFilename());
-//			System.out.println(file.getName());
 			List<String> imgFileName = new ArrayList<String>();
 			
 			for(int i=0; i<files.size();i++) {
@@ -151,8 +87,21 @@ public class ProductController {
 			imgFileName.add(fileName);
 			}
 			
+			String fileName="";
+			for(int i=0; i<files.size();i++) {
+				String file = files.get(i).getOriginalFilename();
+				if(i==0) {
+					fileName += file;
+				}else {
+					fileName += "&"+file;
+				}
+				
+			}
 			
-			product.setFileName(imgFileName.toString());
+			
+			
+			
+			product.setFileName(fileName);
 			productService.addProduct(product);
 			request.setAttribute("product", product);
 			
@@ -161,11 +110,17 @@ public class ProductController {
 		}
 	
 	@RequestMapping("getProduct")//테스트완료
-	public String getUser( @RequestParam("prodNo") int prodNo , Model model ) throws Exception {
+	public String getUser( @RequestParam("prodNo") int prodNo , Model model,HttpServletRequest request,HttpServletResponse response,@CookieValue(value="history" ,required=false) Cookie cookie ) throws Exception {
+		
 		
 		System.out.println("/getProduct.do");
 		//Business Logic
 		Product product = productService.getProduct(prodNo);
+		
+		String prodName = product.getProdName();
+		String fileName = product.getFileName();
+		String cookieString =prodName+"&"+fileName+"&"+prodNo;
+		
 		
 		
 		model.addAttribute("fileName",product.getFileName());
@@ -176,6 +131,15 @@ public class ProductController {
 			list = list.trim();
 			System.out.println(list);
 			String[] splitList = list.split(",");
+			for(int i=0; i<splitList.length;i++) {
+				splitList[i]=splitList[i].trim();
+				imgFile.add(splitList[i]);
+			}
+			model.addAttribute("fileName",imgFile);
+		}
+		
+		if(product.getFileName().contains("&")) {
+			String[] splitList = product.getFileName().split("&");
 			for(int i=0; i<splitList.length;i++) {
 				splitList[i]=splitList[i].trim();
 				imgFile.add(splitList[i]);
@@ -211,67 +175,7 @@ public class ProductController {
 	@RequestMapping("updateProduct")//테스트완료
 	public String updateUser(@ModelAttribute("product") Product product, @RequestParam("file") List<MultipartFile> files, HttpServletRequest request ) throws Exception{
 
-//		System.out.println("/updateProduct.do"); @ModelAttribute("product") Product product , 
-//		//Business Logic
-//		product = productService.updateProduct(product);
-//		
-//		System.out.println("이거 왜 출력안되냐 redirect:/getProduct.do?prodNo="+product.getProdNo());
-//		int prodNo=0;
-//		
-//		if(FileUpload.isMultipartContent(request)) {
-//			
-//		String temDir="C:\\Users\\bitcamp\\git\\repository\\06.Model2MVCShop(Presentation+BusinessLogic)\\src\\main\\webapp\\images\\uploadFiles\\";
-//		//Business Logic
-//		DiskFileUpload fileUpload = new DiskFileUpload();
-//		fileUpload.setRepositoryPath(temDir);
-//		fileUpload.setSizeMax(1024*1024*100);
-//		fileUpload.setSizeThreshold(1024*100);
-//		
-//		if(request.getContentLength()<fileUpload.getSizeMax()) {
-//			Product product = new Product();
-//			
-//			StringTokenizer token = null;
-//			
-//			List fileItemList = fileUpload.parseRequest(request);
-//			int Size = fileItemList.size();
-//			for(int i=0; i<Size;i++) {
-//				FileItem fileItem = (FileItem) fileItemList.get(i);
-//				if(fileItem.isFormField()) {
-//					if(fileItem.getFieldName().equals("manuDate")) {
-//						token = new StringTokenizer(fileItem.getString("euc-kr"),"/");
-//						String manuDate = token.nextToken()+token.nextToken()+token.nextToken();
-//						product.setManuDate(manuDate);
-//					}
-//					else if(fileItem.getFieldName().equals("prodName")) 
-//						product.setProdName(fileItem.getString("euc-kr"));
-//					else if(fileItem.getFieldName().equals("prodDetail")) 
-//						product.setProdDetail(fileItem.getString("euc-kr"));
-//					else if(fileItem.getFieldName().equals("price")) 
-//						product.setPrice(Integer.parseInt(fileItem.getString("euc-kr")));
-//					else if(fileItem.getFieldName().equals("prodNo")) {
-//						prodNo=Integer.parseInt(fileItem.getString("euc-kr"));
-//						product.setProdNo(prodNo);}
-//					}else {//파일형식이면
-//						if(fileItem.getSize()>0) {
-//						int idx = fileItem.getName().lastIndexOf("\\");
-//						//getName은 경로를 전부다 가져오기 때문에 마지막 \\ 뒤가 파일 이름
-//						if(idx==-1) {
-//							idx=fileItem.getName().lastIndexOf("/");
-//						}
-//						String fileName = fileItem.getName().substring(idx+1);
-//						System.out.println(fileName);
-//						product.setFileName(fileName);
-//						try {
-//							File uploadFile = new File(temDir, fileName);
-//							fileItem.write(uploadFile);
-//						}catch(IOException e){
-//							System.out.println(e);
-//						}
-//					}else {
-//						product.setFileName("../../images/empty.GIF");
-//					}
-//				}//else
-//			}//for
+
 		List<String> imgFileName = new ArrayList<String>();
 		
 		for(int i=0; i<files.size();i++) {
@@ -281,8 +185,19 @@ public class ProductController {
 		imgFileName.add(fileName);
 		}
 		
+		String fileName="";
+		for(int i=0; i<files.size();i++) {
+			String file = files.get(i).getOriginalFilename();
+			if(i==0) {
+				fileName += file;
+			}else {
+				fileName += "&"+file;
+			}
+			
+		}
 		
-		product.setFileName(imgFileName.toString());	
+		
+		product.setFileName(fileName);	
 		productService.updateProduct(product);
 		
 		request.setAttribute("product", product);

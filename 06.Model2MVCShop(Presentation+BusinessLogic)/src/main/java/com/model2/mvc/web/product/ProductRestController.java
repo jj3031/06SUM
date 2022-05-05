@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +36,15 @@ public class ProductRestController {
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
 	//setter Method 구현 않음
-		
+	
+	@Value("#{commonProperties['pageUnit']}")
+	//@Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
+	
+	@Value("#{commonProperties['pageSize']}")
+	//@Value("#{commonProperties['pageSize'] ?: 2}")
+	int pageSize;
+	
 	public ProductRestController(){
 		System.out.println(this.getClass());
 	}
@@ -62,5 +71,28 @@ public class ProductRestController {
 		
 		//Business Logic
 		return productService.getProduct(prodNo);
+	}
+	
+	@RequestMapping( value="json/listProduct", method=RequestMethod.POST )
+	public JSONObject listProduct( @RequestBody Search search) throws Exception{
+		
+		System.out.println("/product/json/listProduct : POST");
+		
+		System.out.println("::"+search);
+		search.setPageSize(pageSize);
+		
+		Map<String , Object> map=productService.getProductList(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		
+		JSONObject jsonobj =new JSONObject();
+		jsonobj.put("resultPage", resultPage);
+		jsonobj.put("prodList", map);
+		jsonobj.put("search",search);
+		
+		System.out.println(jsonobj);
+		
+		//Business Logic
+		return jsonobj;
 	}
 }

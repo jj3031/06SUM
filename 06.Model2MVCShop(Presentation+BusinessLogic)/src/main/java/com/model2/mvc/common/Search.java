@@ -73,5 +73,6 @@ public class Search {
 				+ searchCondition + ", searchKeyword=" + searchKeyword
 				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
 				+ ", startRowNum=" + startRowNum +", orderCondition=" +orderCondition+"]";
+
 	}
 }

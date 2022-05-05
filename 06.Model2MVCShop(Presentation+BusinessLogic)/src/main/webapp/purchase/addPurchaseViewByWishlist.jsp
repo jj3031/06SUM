@@ -8,7 +8,8 @@
 
 
 
-
+<script type="text/javascript" src="../javascript/calendar.js">
+</script>
 
 
 

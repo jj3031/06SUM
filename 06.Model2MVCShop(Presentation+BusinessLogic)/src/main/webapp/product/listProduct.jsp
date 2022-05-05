@@ -1,68 +1,131 @@
-<%@ page contentType="text/html; charset=euc-kr" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.util.List"  %>
-
-
-<%@ page import="com.model2.mvc.common.Search" %>
-<%@page import="com.model2.mvc.common.Page"%>
-<%@ page import="com.model2.mvc.service.domain.*" %>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
-<html>
+
+<html lang="ko">
+
 <head>
-<title>»óÇ° ¸ñ·ÏÁ¶È¸</title>
-
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
-
-<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script type="text/javascript">
-
-		// °Ë»ö / page µÎ°¡Áö °æ¿ì ¸ğµÎ Form Àü¼ÛÀ» À§ÇØ JavaScrpt ÀÌ¿ë  
+	<meta charset="EUC-KR">
+	
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+   <link href="/css/animate.min.css" rel="stylesheet">
+   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   
+   
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<style>
+	  body {
+            padding-top : 50px;
+        }
+    </style>
+    
+     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+	<script type="text/javascript">
+		
+		$(function() {
+			 
+			
+			 $( "button:contains('ê°€ê²© ë†’ì€ ìˆœ')" ).on("click" , function() {
+				
+				 fncGetProductOrderList("priceDesc");
+			});
+			 
+			 $( "button:contains('ê°€ê²© ë‚®ì€ ìˆœ')" ).on("click" , function() {
+					
+				 fncGetProductOrderList("priceAsc");
+			});
+			 
+			 $( "button:contains('ë“±ë¡ ìˆœ')" ).on("click" , function() {
+					
+				 fncGetProductOrderList("prodNoAsc");
+			});
+			 
+			$( ".btn.btn-default.g:contains('ìƒì„¸ì •ë³´')" ).on("click" , function() {
+					//Debug..
+					alert( $(this).parent().find("#prodNo").val() );
+					self.location ="/product/getProduct?prodNo="+$(this).parent().find("#prodNo").val();
+			});
+			
+			
+			$( "button:contains('ê²€ìƒ‰')" ).on("click" , function() {
+				//Debug..
+				
+				fncGetUserList('1');
+			}); 
+			
+			$( ".btn.btn-primary.g:contains('ì¥ë°”êµ¬ë‹ˆ')" ).on("click" , function() {
+				//Debug..
+				alert("ì¥ë°”êµ¬ë‹ˆ ì¶”ê°€ ì™„ë£Œ");
+				self.location ="/wishList/addWishlist?prodNo="+$(this).parent().find("#prodNo").val();
+			}); 
+		});
+		
+		
+		
+		// ê²€ìƒ‰ / page ë‘ê°€ì§€ ê²½ìš° ëª¨ë‘ Form ì „ì†¡ì„ ìœ„í•´ JavaScrpt ì´ìš©  
 		function fncGetUserList(currentPage) {
 			//document.getElementById("currentPage").value = currentPage;
+			alert("debug");
 			$("#currentPage").val(currentPage)
 		   	//document.detailForm.submit();
 			$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
 		}
 
 		function fncGetProductOrderList(orderCondition) {
+<<<<<<< HEAD
 			$("#orderCondition").val(orderCondition);
 			//document.getElementById("orderCondition").value = orderCondition;
+=======
+			//document.getElementById("orderCondition").value = orderCondition;
+			$("#orderCondition").val(orderCondition)
+>>>>>>> branch 'master' of https://github.com/jj3031/06SUM.git
    			//document.detailForm.submit();
-			$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
+			fncGetUserList(1);
 		}
 		
+<<<<<<< HEAD
 		$(function(){
 			
 			
-			$( "td.ct_btn01:contains('°¡°İ ³ôÀº ¼ø')" ).on("click" , function () {
+			$( "td.ct_btn01:contains('ê°€ê²© ë†’ì€ ìˆœ')" ).on("click" , function () {
 					$("#orderCondition").val('priceDesc');
 					$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
 				}
 			);
 			
-			$( "td.ct_btn01:contains('°¡°İ ³·Àº ¼ø')" ).on("click" , function() {
+			$( "td.ct_btn01:contains('ê°€ê²© ë‚®ì€ ìˆœ')" ).on("click" , function() {
 				
 				fncGetProductOrderList('priceAsc');
 			});
 			
-			$( "td.ct_btn01:contains('µî·Ï ¼ø')" ).on("click" , function() {
+			$( "td.ct_btn01:contains('ë“±ë¡ ìˆœ')" ).on("click" , function() {
 				
 				fncGetProductOrderList('prodNoAsc');
 			});
 		});
 		
 		
+=======
+   // ë¬´í•œ ìŠ¤í¬ë¡¤ ajax ìš”ì²­
+	
+		
+
+>>>>>>> branch 'master' of https://github.com/jj3031/06SUM.git
 
 </script>
 
@@ -70,72 +133,19 @@
 
 <body bgcolor="#ffffff" text="#000000">
 
-<div style="width:98%; margin-left:10px;">
+	<jsp:include page="/layout/toolbar.jsp" />
 
-<form name="detailForm">
 
-<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
-	<tr>
-		<td width="15" height="37">
-			<img src="/images/ct_ttl_img01.gif" width="15" height="37"/>
-		</td>
-		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="93%" class="ct_ttl01">
+	<div class="container">
+	
+		<div class="page-header text-info">
+	       <h3>ìƒí’ˆëª©ë¡ì¡°íšŒ</h3>
+	    </div>
 
-						
-						<c:if test ="${param.menu=='manage'}">
-							ÆÇ¸Å »óÇ° °ü¸®
-						</c:if>
-						<c:if test ="${param.menu=='search'}">
-							»óÇ° °Ë»ö
-						</c:if>						
-					</td>
-				</tr>
-			</table>
-		</td>
-		<td width="12" height="37">
-			<img src="/images/ct_ttl_img03.gif" width="12" height="37"/>
-		</td>
-	</tr>
-</table>
-
+<<<<<<< HEAD
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
-		<td align="right">
-			<select name="searchCondition" class="ct_input_g" style="width:80px">
-				<option value="0" ${search.searchCondition == '0' ? "selected" : ""}>¼±ÅÃ</option>
-				<option value="1" ${search.searchCondition == '1' ? "selected" : ""}>»óÇ°¹øÈ£</option>
-				<option value="2" ${search.searchCondition == '2' ? "selected" : ""}>»óÇ°¸í</option>
-				<option value="3" ${search.searchCondition == '3' ? "selected" : ""}>°¡°İ</option>				
-			</select>
-			<input 	type="text" name="searchKeyword" value="${search.searchKeyword}"  class="ct_input_g" 
-							style="width:200px; height:20px" >
-		</td>
-		<td align="right" width="70">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncGetUserList('1');">°Ë»ö</a>
-					</td>
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
-
-
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-	<tr>
-		<td colspan="11" >ÀüÃ¼  ${resultPage.totalCount } °Ç¼ö, ÇöÀç ${resultPage.currentPage}  ÆäÀÌÁö</td>
+		<td colspan="11" >ì „ì²´  ${resultPage.totalCount } ê±´ìˆ˜, í˜„ì¬ ${resultPage.currentPage}  í˜ì´ì§€</td>
 	</tr>
 	<tr>
 	 <input type="hidden" id="orderCondition" name="orderCondition" value="${search.orderCondition}"/>
@@ -146,7 +156,7 @@
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href>°¡°İ ³ôÀº ¼ø</a>
+						<a href>ê°€ê²© ë†’ì€ ìˆœ</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -163,7 +173,7 @@
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href>°¡°İ ³·Àº ¼ø</a>
+						<a href>ê°€ê²© ë‚®ì€ ìˆœ</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -180,7 +190,7 @@
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href>µî·Ï ¼ø</a>
+						<a href>ë“±ë¡ ìˆœ</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -192,13 +202,13 @@
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">»óÇ°¸í</td>
+		<td class="ct_list_b" width="150">ìƒí’ˆëª…</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">°¡°İ</td>
+		<td class="ct_list_b" width="150">ê°€ê²©</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b">µî·ÏÀÏ</td>	
+		<td class="ct_list_b">ë“±ë¡ì¼</td>	
 		<td class="ct_line02"></td>
-		<td class="ct_list_b">ÇöÀç»óÅÂ</td>	
+		<td class="ct_list_b">í˜„ì¬ìƒíƒœ</td>	
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
@@ -216,54 +226,114 @@
 		<td align="left">${prod.manuDate}</td>
 		<td></td>
 		<td align="left">
+=======
+	    <div class="row">
+	    
+		    <div class="col-md-6 text-left">
+		    	<p class="text-primary">
+		    		ì „ì²´  ${resultPage.totalCount } ê±´ìˆ˜, í˜„ì¬ ${resultPage.currentPage}  í˜ì´ì§€
+		    	</p>
+		    </div>
+		    
+		    <div class="col-md-6 text-right">
+			    <form class="form-inline" name="detailForm">
+			    
+				  <div class="form-group">
+				    <select class="form-control" name="searchCondition" >
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ì„ íƒ</option>
+						<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>ìƒí’ˆëª…</option>
+						<option value="3"  ${ ! empty search.searchCondition && search.searchCondition==3 ? "selected" : "" }>ê°€ê²©</option>
+					</select>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="ê²€ìƒ‰ì–´"
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+				  </div>
+				  
+				  <button type="button" class="btn btn-default">ê²€ìƒ‰</button>
+				  
+				  <!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
+				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+				  <input type="hidden" id="orderCondition" name="orderCondition" value="${search.orderCondition}"/>
+				</form>
+	    	</div>
+	    	
+		</div>
+		<!-- table ìœ„ìª½ ê²€ìƒ‰ end /////////////////////////////////////-->
+>>>>>>> branch 'master' of https://github.com/jj3031/06SUM.git
 		
-			<c:if test="${prod.remain != 0 }">
-				ÆÇ¸ÅÁß / Àç°í ${prod.remain} °³	
-			</c:if>
-			<c:if test="${prod.remain == 0}">
-				Àç°í¾øÀ½	
-			</c:if>												
+		<div class="row">
+			<div class="col-md-4">
+				<button type="button" class="btn btn-primary">ê°€ê²© ë†’ì€ ìˆœ</button>
+				<button type="button" class="btn btn-primary">ê°€ê²© ë‚®ì€ ìˆœ</button>
+				<button type="button" class="btn btn-primary">ë“±ë¡ ìˆœ</button>
+			</div>
+			<div class="col-md-4"></div>
+			<div class="col-md-4"></div>
+		</div>		
 
-		</td>	
-	</tr>
-	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>	
-	</c:forEach>
-	
-</table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-	<tr>
-		<td align="center">
-		   <input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage }"/>
-	<%-- /////////////////////// EL / JSTL Àû¿ëÀ¸·Î ÁÖ¼® Ã³¸® //////////////////////// 		   
-	<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
-			¢¸ ÀÌÀü
-	<% }else{ %>
-			<a href="javascript:fncGetUserList('<%=resultPage.getCurrentPage()-1%>')">¢¸ ÀÌÀü</a>
-	<% } %>
+		<div class="row">
+			<c:forEach var="prod" items="${prodList}">
+		  <div class="col-sm-6 col-md-4">
+		    <div class="thumbnail">
 
-	<%	for(int i=resultPage.getBeginUnitPage();i<= resultPage.getEndUnitPage() ;i++){	%>
-			<a href="javascript:fncGetUserList('<%=i %>');"><%=i %></a>
-	<% 	}  %>
-	
-	<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
-			ÀÌÈÄ ¢º
-	<% }else{ %>
-			<a href="javascript:fncGetUserList('<%=resultPage.getEndUnitPage()+1%>')">ÀÌÈÄ ¢º</a>
-	<% } %>
-	 /////////////////////// EL / JSTL Àû¿ëÀ¸·Î ÁÖ¼® Ã³¸® //////////////////////// --%>
-	
-		<jsp:include page="../common/pageNavigator.jsp"/>
+		      <c:if test="${fn:contains(prod.fileName, '&')}">
+				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">			 
+						<div class="carousel-inner" role="listbox">		  
+							<c:set var="product" value="${fn:split(prod.fileName,'&')}" />
+								<c:forEach var="telNum" items="${product}" varStatus="g">
+									<!-- Wrapper for slides -->								 
+								 <c:if test="${g.count==1}">
+								    <div class="item active">
+								      <img src="/images/uploadFiles/${telNum}" >
+								    </div>
+								 </c:if>
+								 
+								 <c:if test="${g.count!=1}">   
+								    <div class="item">
+								      <img src="/images/uploadFiles/${telNum}" >
+								    </div>
+								 </c:if>		    
+								</c:forEach>
+						</div>
+				</div>
+								
+				</c:if>				
+								<!-- <img src="/images/uploadFiles/${telNum}" alt="image ì—†ìŒ"  height="200" width="242"> -->
+		      <c:if test="${!fn:contains(prod.fileName, '&')}">
+		      <img src="/images/uploadFiles/${prod.fileName}" alt="image ì—†ìŒ"  height="200" width="242">
+		      </c:if>
+		      <div class="caption">
+		        <h3>${prod.prodName}</h3>
+		        <p>${prod.prodDetail}</p>
+		        	<c:if test="${prod.remain != 0 }">
+						<p>íŒë§¤ì¤‘ / ì¬ê³  ${prod.remain} ê°œ</p>	
+					</c:if>
+					<c:if test="${prod.remain == 0}">
+						<p>ì¬ê³ ì—†ìŒ</p>	
+					</c:if>
+				<c:if test="${prod.remain != 0 }">			
+		        <p><a href="#" class="btn btn-primary g" role="button" id="wishlist">ì¥ë°”êµ¬ë‹ˆ</a> <a href="#" class="btn btn-default g" role="button">ìƒì„¸ì •ë³´</a><input type="hidden"  id="prodNo" value="${prod.prodNo}"/></p>
+		        </c:if>
+		        <c:if test="${prod.remain == 0}">
+		        <p><a href="#" class="btn btn-primary" role="button" disabled="disabled">ì¥ë°”êµ¬ë‹ˆ</a> <a href="#" class="btn btn-default" role="button" disabled="disabled">ìƒì„¸ì •ë³´</a></p>
+		        </c:if>
+		        
+		      </div>
+		    </div>
+		  </div>
+		  	</c:forEach>
+		</div>
 		
-    	</td>
-	</tr>
-</table>
-<!--  ÆäÀÌÁö Navigator ³¡ -->
-
-</form>
-
-</div>
+	
+ 	</div>
+ 	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
+ 	
+ 	
+ 	<!-- PageNavigation Start... -->
+	<jsp:include page="../common/pageNavigator_new.jsp"/>
 </body>
 </html>

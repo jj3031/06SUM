@@ -200,6 +200,11 @@ public class PurchaseController {
 		// Business logic ผ๖วเ
 		Map<String , Object> map=purchaseService.getPurchaseList(search, user.getUserId());
 		
+		List<Purchase> list=(List<Purchase>) map.get("list");
+		for(int i=0; i<list.size();i++) {
+			list.get(i).setBuyer(userService.getUser(list.get(i).getBuyer().getUserId()));
+			
+		}
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 		
