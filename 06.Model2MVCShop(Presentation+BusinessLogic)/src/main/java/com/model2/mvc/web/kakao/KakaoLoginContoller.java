@@ -74,8 +74,10 @@ public class KakaoLoginContoller {
 	@RequestMapping( value="logout")
 	public String logout(HttpSession session) throws Exception{
 		
-	    kakao.kakaoLogout((String)session.getAttribute("access_Token"));
-	    kakao.kakaoServiceLogout((String)session.getAttribute("access_Token"));
+		
+		kakao.kakaoServiceLogout((String)session.getAttribute("access_Token"));
+	    kakao.kakaoLogout();
+	    
 	    session.removeAttribute("access_Token");
 	    session.removeAttribute("userId");
 	    session.invalidate();

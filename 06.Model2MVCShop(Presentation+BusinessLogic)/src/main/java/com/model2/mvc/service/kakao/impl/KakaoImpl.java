@@ -122,7 +122,7 @@ public class KakaoImpl implements Kakao{
         return userInfo;
     }
     
-    public void kakaoLogout(String access_Token) {
+    public void kakaoLogout() {
 //        String reqURL = "https://kapi.kakao.com/v1/user/logout";
 //        try {
 //            URL url = new URL(reqURL);
