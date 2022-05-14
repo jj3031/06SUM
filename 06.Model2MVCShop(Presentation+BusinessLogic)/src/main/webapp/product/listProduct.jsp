@@ -1,14 +1,14 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
 
-
-
+<!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
-<html lang="ko">
 
+<html lang="ko">
+	
 <head>
 	<meta charset="EUC-KR">
 	
@@ -39,6 +39,12 @@
 	  body {
             padding-top : 50px;
         }
+      
+      img {
+			  width: 242px;
+			  height: 200px;
+			}  
+    	
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -94,34 +100,11 @@
 		}
 
 		function fncGetProductOrderList(orderCondition) {
-			$("#orderCondition").val(orderCondition);
 			//document.getElementById("orderCondition").value = orderCondition;
-			//document.getElementById("orderCondition").value = orderCondition;
+			$("#orderCondition").val(orderCondition)
    			//document.detailForm.submit();
 			fncGetUserList(1);
 		}
-		
-
-		$(function(){
-			
-			
-			$( "td.ct_btn01:contains('가격 높은 순')" ).on("click" , function () {
-					$("#orderCondition").val('priceDesc');
-					$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
-				}
-			);
-			
-			$( "td.ct_btn01:contains('가격 낮은 순')" ).on("click" , function() {
-				
-				fncGetProductOrderList('priceAsc');
-			});
-			
-			$( "td.ct_btn01:contains('등록 순')" ).on("click" , function() {
-				
-				fncGetProductOrderList('prodNoAsc');
-			});
-		});
-		
 		
    // 무한 스크롤 ajax 요청
 	
@@ -129,7 +112,6 @@
 
 
 </script>
-
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -141,7 +123,10 @@
 	
 		<div class="page-header text-info">
 	       <h3>상품목록조회</h3>
-	     
+	    </div>
+
+	    <div class="row">
+	    
 		    <div class="col-md-6 text-left">
 		    	<p class="text-primary">
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
@@ -239,7 +224,9 @@
 		  </div>
 		  	</c:forEach>
 		</div>
-	</div>	
+		
+	
+ 	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	

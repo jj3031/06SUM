@@ -144,7 +144,7 @@
 					    </div>
 					  </div>
 					   <div class="form-group">
-						<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=14488329bb0ccdf08f6b761a0726ab5a&redirect_uri=http://localhost:8080/kakao/login">
+						<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=14488329bb0ccdf08f6b761a0726ab5a&redirect_uri=http://192.168.0.5:8080/kakao/login">
             <img src="/images/kakao/kakao_login_medium_narrow.png">
        					 </a>
        					 </div>

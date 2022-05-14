@@ -80,7 +80,6 @@
 	                           <li><a href="#">판매목록조회</a></li>
 	                         </c:if>
 	                         <li><a href="#">장바구니</a></li>
-	                         <li><a href="#">최근본상품</a></li>
 	                         <li class="divider"></li>
 	                         <li><a href="#">etc..</a></li>
 	                     </ul>

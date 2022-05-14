@@ -37,6 +37,7 @@ function fncAddPurchaseByWishlist() {
 
 <body bgcolor="#ffffff" text="#000000">
 
+
 <div style="width:98%; margin-left:10px;">
 
 <form name="detailForm" method="post">

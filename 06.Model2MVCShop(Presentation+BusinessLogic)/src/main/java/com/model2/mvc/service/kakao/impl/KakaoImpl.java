@@ -19,6 +19,8 @@ import com.model2.mvc.service.kakao.Kakao;
 @Service("kakaoImpl")
 public class KakaoImpl implements Kakao{
     
+	
+	
     public String getAccessToken (String authorize_code) {
         String access_Token = "";
         String refresh_Token = "";
@@ -37,7 +39,7 @@ public class KakaoImpl implements Kakao{
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=14488329bb0ccdf08f6b761a0726ab5a");
-            sb.append("&redirect_uri=http://localhost:8080/kakao/login");
+            sb.append("&redirect_uri=http://192.168.0.5:8080/kakao/login");
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
             bw.flush();
@@ -147,7 +149,7 @@ public class KakaoImpl implements Kakao{
 //            e.printStackTrace();
 //        }
     	
-    	String reqURL = "https://kauth.kakao.com/oauth/logout?client_id=14488329bb0ccdf08f6b761a0726ab5a&logout_redirect_uri=http://localhost:8080/user/logout";
+    	String reqURL = "https://kauth.kakao.com/oauth/logout?client_id=14488329bb0ccdf08f6b761a0726ab5a&logout_redirect_uri=http://192.168.0.5:8080/user/logout";
         try {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -197,4 +199,5 @@ public class KakaoImpl implements Kakao{
       }
     }
     
+   
 }
